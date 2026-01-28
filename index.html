@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Prince Official Website</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+body{background:#0b0f1a;color:#fff;overflow:hidden}
+.page{display:none;min-height:100vh;padding:20px;text-align:center;opacity:0;transition:opacity .8s}
+.page.active{display:block;opacity:1}
+input,button{padding:12px;border:none;border-radius:8px;width:90%;max-width:320px;margin:10px}
+button{background:#00d4ff;color:#000;font-weight:bold;cursor:pointer}
+.small{font-size:12px;opacity:.8}
+a{color:#00d4ff;text-decoration:none}
+.checkbox{display:flex;justify-content:center;gap:10px;margin:10px}
+
+/* GLASS EFFECT BOX */
+.box{
+background: rgba(255,255,255,0.05);
+backdrop-filter: blur(10px);
+border-radius:15px;padding:15px;margin:15px;
+transition:transform .3s;
+}
+.box:hover{transform:scale(1.05);}
+
+/* LOADING */
+.loading{
+display:flex;justify-content:center;align-items:center;
+font-size:22px;animation:pulse 1s infinite
+}
+@keyframes pulse{0%{opacity:.4}50%{opacity:1}100%{opacity:.4}}
+
+/* AI Chat UI */
+#chatBox{background:rgba(255,255,255,0.05);border-radius:15px;max-width:350px;margin:10px auto;padding:10px;height:300px;overflow-y:auto;text-align:left}
+.message{margin:5px;padding:8px;border-radius:8px;max-width:80%;display:inline-block}
+.user{background:#00d4ff;color:#000;align-self:flex-end}
+.ai{background:#11162a;color:#fff}
+
+/* HELP BUTTON */
+#help{
+position:fixed;bottom:20px;right:20px;
+background:#00d4ff;color:#000;
+padding:10px 15px;border-radius:30px;
+cursor:move;font-weight:bold;z-index:999
+}
+.footer{margin-top:30px;font-size:12px;opacity:.7}
+
+/* VOICE TOGGLE */
+#voiceToggle{margin:10px}
+</style>
+</head>
+
+<body>
+
+<div id="help" onclick="openTG()">HELP</div>
+
+<!-- PAGE 1 : KEY LOGIN -->
+<div class="page active" id="page1">
+<h2>🔐 Enter Access Key</h2>
+<input type="password" id="mainKey" placeholder="Enter Key">
+<button onclick="checkMainKey()">LOGIN</button>
+<p class="small">
+<a href="https://t.me/Ajay63001" target="_blank">CONTACT FOR KEY</a>
+</p>
+<div class="footer">Created By Prince</div>
+</div>
+
+<!-- PAGE 2 : LOADING / SPLASH -->
+<div class="page" id="page2">
+<div class="loading">
+<img src="https://i.postimg.cc/XqMBrR9v/logo.png" width="80"><br>
+Loading Prince Website...
+</div>
+</div>
+
+<!-- PAGE 3 : TERMS -->
+<div class="page" id="page3">
+<h3>Terms & Conditions</h3>
+<p class="small">
+This website is for educational and demo purposes only.
+</p>
+<div class="checkbox">
+<input type="checkbox" id="tc"> Terms & Conditions
+</div>
+<div class="checkbox">
+<input type="checkbox" id="pp"> Privacy Policy
+</div>
+<button onclick="checkTerms()">CONTINUE</button>
+<div class="footer">Created By Prince</div>
+</div>
+
+<!-- PAGE 4 : DISCLAIMER -->
+<div class="page" id="page4">
+<h3>Disclaimer</h3>
+<p id="typeText"></p>
+<div class="footer">Created By Prince</div>
+</div>
+
+<!-- PAGE 5 : APPS -->
+<div class="page" id="page5">
+<h2>📱 Applications</h2>
+
+<!-- Voice Intro -->
+<label id="voiceToggle"><input type="checkbox" id="voiceOn" checked> Voice Intro ON/OFF</label>
+
+<!-- Chat Demo -->
+<div id="chatBox"></div>
+<input type="text" id="userMsg" placeholder="Type message..." style="width:80%">
+<button onclick="sendMessage()">Send</button>
+
+<!-- App Boxes -->
+<div class="box">
+<h4>Phonepe_Sound_box</h4>
+<p class="small">PLEASE COPY THIS CODE THEN OPEN :-<br>
+L&D ADDMI KYA JANE SKULL STUFF KYA HE !
+</p>
+<button onclick="openApp('https://github.com/mrprince6300/princeofficial.gethub.io/releases/download/v1.0/PP.FREE.BLACK.apk')">OPEN</button>
+</div>
+
+<div class="box">
+<h4>Phonepe_SMS</h4>
+<button onclick="openApp('https://github.com/mrprince6300/princeofficial.gethub.io/releases/download/v2.0/PhonePe.apk')">OPEN</button>
+</div>
+
+<div class="box">
+<h4>Gpay</h4>
+<button onclick="openApp('https://github.com/mrprince6300/princeofficial.gethub.io/releases/download/v3.0/GPay.apk')">OPEN</button>
+</div>
+
+<div class="box">
+<h4>Gpay_symple</h4>
+<button onclick="openApp('https://github.com/mrprince6300/princeofficial.gethub.io/releases/download/v4.0/GP.apk')">OPEN</button>
+</div>
+
+<div class="footer">Created By Prince</div>
+</div>
+
+<script>
+// MOBILE ONLY
+if(!/Android|iPhone/i.test(navigator.userAgent)){
+document.body.innerHTML="❌ Mobile Devices Only";
+}
+
+// INTERNET CHECK
+setInterval(()=>{
+if(!navigator.onLine){
+document.body.innerHTML="❌ Internet Required";
+}
+},1000);
+
+// TELEGRAM
+function openTG(){window.open("https://t.me/Ajay63001","_blank");}
+
+// PAGE SWITCH
+function show(id){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+}
+
+// MAIN KEY
+function checkMainKey(){
+if(document.getElementById('mainKey').value==="address_meerut"){
+show('page2');
+if(document.getElementById('voiceOn').checked) playVoice("Welcome to Prince Website");
+setTimeout(()=>show('page3'),4000);
+}else{alert("Invalid Key");}
+}
+
+// TERMS
+function checkTerms(){
+if(document.getElementById('tc').checked && document.getElementById('pp').checked){
+show('page4');
+typeDisclaimer();
+}else{alert("Please accept all policies");}
+}
+
+// DISCLAIMER TYPE
+let text="This website does not promote any illegal activity. All content is provided for educational purposes only.";
+let i=0;
+function typeDisclaimer(){
+let el=document.getElementById('typeText');
+el.innerHTML="";
+let timer=setInterval(()=>{
+el.innerHTML+=text.charAt(i);
+i++;
+if(i>=text.length){clearInterval(timer); setTimeout(()=>show('page5'),5000);}
+},100);
+}
+
+// APP KEY
+function openApp(link){
+let k=prompt("Enter App Key");
+if(k==="address_lisari"){window.open(link,"_blank");}
+else{alert("Wrong App Key");}
+}
+
+// DRAG HELP
+let help=document.getElementById("help");
+let dx=0,dy=0,drag=false;
+help.onmousedown=e=>{drag=true;dx=e.offsetX;dy=e.offsetY}
+document.onmousemove=e=>{
+if(drag){help.style.left=e.pageX-dx+"px";help.style.top=e.pageY-dy+"px";help.style.right="auto";help.style.bottom="auto";}
+}
+document.onmouseup=()=>drag=false;
+
+// VOICE INTRO
+function playVoice(text){
+let utter=new SpeechSynthesisUtterance(text);
+utter.lang="en-US";speechSynthesis.speak(utter);
+}
+
+// AI CHAT DEMO
+let chatBox=document.getElementById('chatBox');
+function sendMessage(){
+let msg=document.getElementById('userMsg').value;
+if(!msg) return;
+let div=document.createElement('div'); div.className='message user'; div.textContent=msg; chatBox.appendChild(div); document.getElementById('userMsg').value='';
+setTimeout(()=>{let ai=document.createElement('div'); ai.className='message ai'; ai.textContent="AI says: "+msg.split('').reverse().join(''); chatBox.appendChild(ai); chatBox.scrollTop=chatBox.scrollHeight;},1000);
+}
+</script>
+
+</body>
+</html>
